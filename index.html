@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>My Book</title>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/9.1.6/marked.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/3.0.6/purify.min.js"></script>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
@@ -123,7 +124,7 @@
       if (!res.ok) throw new Error(`404 \u2014 ${page.file} not found`);
       const md = await res.text();
       body.className = '';
-      body.innerHTML = marked.parse(md);
+      body.innerHTML = DOMPurify.sanitize(marked.parse(md));
       body.querySelectorAll('table').forEach(t => {
         const wrap = document.createElement('div');
         wrap.className = 'table-wrap';
