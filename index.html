@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>My Book</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/9.1.6/marked.min.js"></script>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<div id="sidebar-overlay" onclick="toggleSidebar()"></div>
+
+<nav id="sidebar">
+  <div id="sidebar-header">
+    <div class="book-label">My Collection</div>
+    <h1>My Book</h1>
+    <p>A collection of notes &amp; guides</p>
+  </div>
+  <div id="sidebar-swatch"><span></span><span></span><span></span></div>
+  <div id="toc"></div>
+</nav>
+
+<div id="main">
+  <div id="topbar">
+    <div style="display:flex;align-items:center;gap:12px;">
+      <button id="menu-toggle" onclick="toggleSidebar()">&#9776;</button>
+      <div id="breadcrumb">
+        <span>My Book</span>
+        <span>&#8250;</span>
+        <span class="crumb-active" id="crumb-title">Introduction</span>
+      </div>
+    </div>
+    <div id="page-nav">
+      <button class="nav-btn" id="btn-prev" onclick="navigate(-1)">&#8592; Prev</button>
+      <button class="nav-btn" id="btn-next" onclick="navigate(1)">Next &#8594;</button>
+    </div>
+  </div>
+
+  <div id="content-wrap">
+    <div id="content">
+      <div id="content-band">
+        <div id="content-band-label">Now reading</div>
+      </div>
+      <div id="content-body-inner">
+        <div id="md-body" class="loading">Loading&hellip;</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  // ── EDIT THIS to define your book structure ──────────────────────────────
+  const chapters = [
+    {
+      section: "Getting Started",
+      pages: [
+        { title: "Introduction",      file: "docs/intro.md",         num: "00"  },
+      ]
+    },
+    {
+      section: "Chapter 1 — Foundations",
+      pages: [
+        { title: "Overview",          file: "docs/ch1-overview.md",  num: "1.1" },
+        { title: "Deep Dive",         file: "docs/ch1-deep-dive.md", num: "1.2" },
+      ]
+    },
+    {
+      section: "Chapter 2 — Advanced",
+      pages: [
+        { title: "Concepts",          file: "docs/ch2-concepts.md",  num: "2.1" },
+        { title: "Examples",          file: "docs/ch2-examples.md",  num: "2.2" },
+      ]
+    },
+  ];
+  // ─────────────────────────────────────────────────────────────────────────
+
+  const allPages = chapters.flatMap(s => s.pages);
+  let currentIndex = 0;
+
+  const toc = document.getElementById('toc');
+  chapters.forEach(section => {
+    const sec = document.createElement('div');
+    sec.className = 'toc-section';
+    sec.innerHTML = `<div class="toc-section-label">${section.section}</div>`;
+    section.pages.forEach(page => {
+      const a = document.createElement('a');
+      a.className = 'toc-link';
+      a.dataset.file = page.file;
+      a.innerHTML = `<span class="chapter-num">${page.num}</span>${page.title}`;
+      a.onclick = () => {
+        const idx = allPages.findIndex(p => p.file === page.file);
+        loadPage(idx);
+        if (window.innerWidth <= 768) toggleSidebar();
+      };
+      sec.appendChild(a);
+    });
+    toc.appendChild(sec);
+  });
+
+  async function loadPage(index) {
+    currentIndex = index;
+    const page = allPages[index];
+
+    document.querySelectorAll('.toc-link').forEach(a =>
+      a.classList.toggle('active', a.dataset.file === page.file)
+    );
+
+    document.getElementById('crumb-title').textContent = page.title;
+    document.getElementById('btn-prev').disabled = index === 0;
+    document.getElementById('btn-next').disabled = index === allPages.length - 1;
+
+    document.getElementById('content-band-label').textContent = page.num + '  \u2014  ' + page.title;
+
+    history.pushState(null, '', `#${encodeURIComponent(page.file)}`);
+
+    const body = document.getElementById('md-body');
+    body.className = 'loading';
+    body.textContent = 'Loading\u2026';
+
+    try {
+      const res = await fetch(page.file);
+      if (!res.ok) throw new Error(`404 \u2014 ${page.file} not found`);
+      const md = await res.text();
+      body.className = '';
+      body.innerHTML = marked.parse(md);
+      body.querySelectorAll('table').forEach(t => {
+        const wrap = document.createElement('div');
+        wrap.className = 'table-wrap';
+        t.parentNode.insertBefore(wrap, t);
+        wrap.appendChild(t);
+      });
+    } catch (err) {
+      body.className = '';
+      body.innerHTML = `<p style="color:#f03e2f;font-size:14px;font-weight:700;">
+        ${err.message}<br><br>
+        Make sure <code>${page.file}</code> exists in your repository.
+      </p>`;
+    }
+
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function navigate(delta) {
+    const next = currentIndex + delta;
+    if (next >= 0 && next < allPages.length) loadPage(next);
+  }
+
+  function toggleSidebar() {
+    document.getElementById('sidebar').classList.toggle('open');
+    document.getElementById('sidebar-overlay').classList.toggle('visible');
+  }
+
+  window.addEventListener('load', () => {
+    const hash = decodeURIComponent(location.hash.slice(1));
+    const idx = allPages.findIndex(p => p.file === hash);
+    loadPage(idx >= 0 ? idx : 0);
+  });
+
+  window.addEventListener('popstate', () => {
+    const hash = decodeURIComponent(location.hash.slice(1));
+    const idx = allPages.findIndex(p => p.file === hash);
+    if (idx >= 0) loadPage(idx);
+  });
+</script>
+</body>
+</html>
