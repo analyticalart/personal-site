@@ -94,6 +94,7 @@ body {
   text-transform: uppercase;
   color: rgba(255,255,255,0.22);
   padding: 10px 24px 4px;
+  font-family: var(--font-mono);
 }
 
 .toc-link {
@@ -103,8 +104,9 @@ body {
   padding: 8px 24px;
   color: rgba(255,255,255,0.45);
   text-decoration: none;
-  font-size: 13px;
+  font-size: 12px;
   font-weight: 500;
+  font-family: var(--font-mono);
   border-left: 3px solid transparent;
   transition: all 0.15s;
   cursor: pointer;
@@ -223,13 +225,14 @@ body {
 
 #content-band-label {
   position: absolute;
-  bottom: 14px;
+  bottom: 20px;
   left: 24px;
-  font-size: 9px;
-  font-weight: 700;
-  letter-spacing: 0.16em;
+  font-size: 14px;
+  font-weight: 400;
+  font-family: var(--font-display);
+  letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: rgba(255,255,255,0.55);
+  color: rgba(255,255,255,0.75);
 }
 
 #content-body-inner {
