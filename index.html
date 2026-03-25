@@ -3,7 +3,13 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>My Book</title>
+  <link rel="icon" type="image/png" href="assets/favicon.png">
+  <title>analyticalart</title>
+  <meta name="description" content="A fieldnote by analyticalart." />
+  <meta property="og:title" content="analyticalart" />
+  <meta property="og:description" content="A fieldnote by analyticalart." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://analyticalart.github.io/personal-site/" />
   <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/9.1.6/marked.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/3.0.6/purify.min.js"></script>
   <link rel="stylesheet" href="style.css" />
@@ -14,9 +20,9 @@
 
 <nav id="sidebar">
   <div id="sidebar-header">
-    <div class="book-label">My Collection</div>
-    <h1>My Book</h1>
-    <p>A collection of notes &amp; guides</p>
+    <div class="book-label">Messy but mine</div>
+    <h1>Fieldnotes</h1>
+    <p>A collection of thoughts &amp; ideas</p>
   </div>
   <div id="sidebar-swatch"><span></span><span></span><span></span></div>
   <div id="toc"></div>
@@ -27,7 +33,7 @@
     <div style="display:flex;align-items:center;gap:12px;">
       <button id="menu-toggle" onclick="toggleSidebar()">&#9776;</button>
       <div id="breadcrumb">
-        <span>My Book</span>
+        <span>Fieldnotes</span>
         <span>&#8250;</span>
         <span class="crumb-active" id="crumb-title">Introduction</span>
       </div>
@@ -60,17 +66,16 @@
       ]
     },
     {
-      section: "Chapter 1 — Foundations",
+      section: "Chapter 1 — Epiphanies about My Job",
       pages: [
-        { title: "Overview",          file: "docs/ch1-overview.md",  num: "1.1" },
-        { title: "Deep Dive",         file: "docs/ch1-deep-dive.md", num: "1.2" },
+        { title: "Platform Engineering is a thing", file: "docs/chapter_1/ch1-platform_engineering_is_a_thing.md",  num: "1.1" },
       ]
     },
     {
-      section: "Chapter 2 — Advanced",
+      section: "Unfolding Gyri",
       pages: [
-        { title: "Concepts",          file: "docs/ch2-concepts.md",  num: "2.1" },
-        { title: "Examples",          file: "docs/ch2-examples.md",  num: "2.2" },
+        { title: "What's with the name",          file: "docs/chapter_2/ch2-sulcus_and_gyrus.md",  num: "2.0" },
+        { title: "Gyrus - Agent Ecosystem in India",          file: "docs/chapter_2/ch2-gyrus-agent_ecosystems.md",  num: "2.1" },
       ]
     },
   ];
@@ -112,6 +117,7 @@
     document.getElementById('btn-next').disabled = index === allPages.length - 1;
 
     document.getElementById('content-band-label').textContent = page.num + '  \u2014  ' + page.title;
+    document.getElementById('content-band').style.background = page.bandColor || 'var(--red)';
 
     history.pushState(null, '', `#${encodeURIComponent(page.file)}`);
 
@@ -122,6 +128,7 @@
     try {
       const res = await fetch(page.file);
       if (!res.ok) throw new Error(`404 \u2014 ${page.file} not found`);
+      if (!allPages.find(p => p.file === page.file)) throw new Error('Invalid page reference');
       const md = await res.text();
       body.className = '';
       body.innerHTML = DOMPurify.sanitize(marked.parse(md));

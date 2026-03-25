@@ -1,179 +1,37 @@
-# Welcome to My Book
+# Welcome to My Fieldnotes
 
-> *"The more that you read, the more things you will know."*
-> — Dr. Seuss
+## About The Fieldnote
+This is kind of an **introduction page**, not for introducing myself but rather an introduction to what this digital fieldnote is. 
 
-This is your **introduction page** — the starting point for everything in this collection. Below you'll find a showcase of every markdown feature available, so you can copy patterns and use them in your own pages.
+As someone who has a love for writing, I realized I need to have my thoughts _dumped_, in a way that allows me to quite literally snapshot my brain as is. 
 
----
+Everything logged somewhere, anywhere, and have it include not only random rabbit hole deep dives, quirks and details I have noticed at work but also philosophy, observations about consumerism, smaller and finer details not worth letting go. 
 
-## About This Book
-
-This book is a **living document**. Pages are written in plain Markdown (`.md` files), rendered on the fly in your browser — no build step, no framework, no fuss.
-
-You'll find chapters covering:
-
-- Core concepts and foundational knowledge
-- Deep dives with examples and code
-- Reference tables and quick-lookup guides
-- And more as the collection grows
+> This has to be a space that has intention for not being noticed unless 
+>>this reached to you from somewhere. 
 
 ---
 
-## What You Will Learn
+## About This Edition
 
-### Section Breakdown
-
-| Chapter | Topic | Difficulty |
-|---------|-------|------------|
-| 1.1 | Overview & Landscape | Beginner |
-| 1.2 | Deep Dive | Intermediate |
-| 2.1 | Core Concepts | Intermediate |
-| 2.2 | Real-World Examples | Advanced |
+- The colourway is inspired by: [Laufey - From The Start (Official Music Video)](https://youtu.be/lSD_L-xic9o)
+- Content provided by: Yours truly, Analytical Rat ([@analyticalart](https://github.com/analyticalart))
 
 ---
 
-## Prerequisites
-
-Before diving in, make sure you're comfortable with:
-
-1. **Basic terminal usage** — `cd`, `ls`, `cat`, file paths
-2. **Git fundamentals** — clone, commit, push, pull
-3. **A text editor** — VS Code, Neovim, or anything you love
-
-Optional but useful:
-
-- YAML syntax (for config files)
-- A rough mental model of how DNS works
-- Familiarity with containers (Docker/Podman)
-
----
-
-## Key Concepts at a Glance
-
-### What is X?
-
-X is a **declarative, GitOps-friendly** approach to doing Y, where you define *what you want* rather than *how to get there*. Think of it like writing a recipe vs. cooking step by step.
-
-### Why does it matter?
-
-Because **manual processes don't scale**. When your infrastructure grows from 1 server to 100, you need:
-
-- **Reproducibility** — the same config gives the same result, always
-- **Auditability** — every change is tracked in Git
-- **Speed** — automation beats humans at repetitive tasks every time
-
-### The three pillars
+## A little index for you, though field notes are usually messy?
 
 ```
-+-----------------------------------------+
-|           The Three Pillars             |
-+-------------+-----------+---------------+
-|  Observe    |  Enforce  |  Recover      |
-|  (metrics)  |  (policy) |  (chaos)      |
-+-------------+-----------+---------------+
+Fieldnotes/
+├── intro.md                                                <-- You are here
+└── docs/
+    ├── 1.0-Epiphanies about my job/
+    │   └── 1.1-Platform Engineering is a thing.md
+    │
+    └──Unfolding Gyri/
+        ├── What's with the name.md
+        ├── Gyrus - Agent Ecosystem in India.md
+        └── Gyrus.md
 ```
 
----
-
-## A Code Example
-
-Here's a minimal working configuration in YAML:
-
-```yaml
-# config.yaml
-apiVersion: v1
-kind: Config
-metadata:
-  name: my-service
-  labels:
-    env: production
-    team: platform
-
-spec:
-  replicas: 3
-  strategy: RollingUpdate
-  resources:
-    requests:
-      cpu: "250m"
-      memory: "256Mi"
-    limits:
-      cpu: "500m"
-      memory: "512Mi"
-```
-
-And the equivalent as a shell one-liner:
-
-```bash
-# Apply config and watch rollout
-kubectl apply -f config.yaml && kubectl rollout status deploy/my-service
-```
-
-Or in Python if you're automating it:
-
-```python
-import subprocess
-
-def apply_and_watch(manifest: str) -> None:
-    subprocess.run(["kubectl", "apply", "-f", manifest], check=True)
-    subprocess.run(["kubectl", "rollout", "status", f"deploy/{manifest}"], check=True)
-```
-
----
-
-## Common Pitfalls
-
-> **Heads up:** These are the mistakes *everyone* makes at least once.
-
-- **Hardcoding secrets** in config files — use environment variables or a secrets manager
-- **Skipping resource limits** — unbounded pods will eat your cluster alive
-- **No readiness probes** — traffic hits your pod before it's actually ready
-- **Manual hotfixes** in production — if it's not in Git, it didn't happen
-
----
-
-## Folder Structure Reference
-
-```
-my-book/
-├── index.html          <- The book shell (edit chapters[] here)
-├── docs/
-│   ├── intro.md        <- This file
-│   ├── ch1-overview.md
-│   ├── ch1-deep-dive.md
-│   ├── ch2-concepts.md
-│   └── ch2-examples.md
-└── assets/             <- Optional: images, diagrams
-```
-
----
-
-## Quick Checklist
-
-- [ ] Spellcheck the content
-- [ ] All code blocks have a language tag
-- [ ] Cross-references use the correct `file` path
-- [ ] Images are in `assets/` and linked relatively
-- [ ] Chapter is registered in `index.html` under `chapters[]`
-
----
-
-## Useful References
-
-- [Markdown Guide](https://www.markdownguide.org/) — the definitive reference
-- [GitHub Pages Docs](https://docs.github.com/en/pages) — deploying this site
-- [marked.js](https://marked.js.org/) — the renderer powering this book
-
----
-
-## How to Navigate
-
-Use the **sidebar** on the left to jump between chapters.
-Use **Prev / Next** buttons in the top bar to move page by page.
-On mobile, tap the menu button to open the sidebar.
-
-Links in the URL bar are **shareable** — each page updates the hash automatically.
-
----
-
-*Last updated: 2026 · Built with plain HTML + Markdown · No frameworks were harmed.*
+*Last updated: 2026 · Built with plain HTML + Markdown ·*
