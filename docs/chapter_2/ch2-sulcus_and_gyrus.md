@@ -1,6 +1,6 @@
 ## This is the only explanation you need:
 
-![A description of the image](/assets/Brain_folds.jpg)
+![A description of the image](assets/Brain_folds.jpg)
 
 [Source](https://qbi.uq.edu.au/files/7941/Brain_folds.jpg)
 

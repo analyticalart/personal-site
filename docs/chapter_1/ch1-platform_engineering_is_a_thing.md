@@ -16,7 +16,7 @@ One of the most coolest implementations done by my team was a Kubernetes custom 
 
 The infrastructure of our internal tooling for K8s was interesting, we had CRDs deploying helm charts acting as plugins on spoke clusters which was deployed through our main core/hub cluster which was running a deployment of the custom controller. Jargony? Imagine a spider, the body being the central function unit having all the default plugins and the deployment pod of the controller, with every leg end was attached a cluster. The source of truth only mattered if it was on the web, if the weave was missing, the reconciliation loop nuked any temporary changes.  
 
-![Spidey](/assets/spidey-MCA.jpg)
+![Spidey](assets/spidey-MCA.jpg)
 [Bold Jumper source: By Kaldari - Own work, CC0](https://commons.wikimedia.org/w/index.php?curid=10432567)
 
 This technical difficulty of a multi-cluster architecture (called spidey henceforth) was not something that clicked. During my internship I had worked as a backend Java dev on a website that was actually a monolith application, no docker, no container, no touching cloud either (only the tech lead was allowed to nuke things I suppose?) with only the knowledge that I was allowed to deploy every change by hitting build on Jenkins and then SSH into a machine to view logs because Jboss's local run would hog my laptop's RAM and make it into a lap heater.
